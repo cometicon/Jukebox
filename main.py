@@ -19,7 +19,7 @@ queen = [
 
 def main(argv):
     print('Hello world')
-    my_jukebox = Jukebox(queen) # our jukebox has the album "Queen"
+    my_jukebox = Jukebox(queen, TrackPlayer()) # our jukebox has the album "Queen"
     my_jukebox.select(queen[1]) # We select the tracks 1, 3 and 4
     my_jukebox.select(queen[3])
     my_jukebox.select(queen[4])

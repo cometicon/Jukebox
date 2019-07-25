@@ -53,15 +53,15 @@ class jukeboxTest(unittest.TestCase):
         
     def test_player(self):
         """Test Jukebox class"""
-        p = Player()
+        p = TrackPlayer()
         p.runPlaylist(Playlist(self.tracks), False)
         
     def test_jukebox(self):
         """Test Jukebox"""
-        j = Jukebox([])
+        j = Jukebox([], TrackPlayer())
         j.play()
         
-        j = Jukebox(self.tracks)
+        j = Jukebox(self.tracks, TrackPlayer())
         p = j.getPlaylist()
         tl = p.getTrackList()
         self.assertListEqual(p.getTrackList(), [])

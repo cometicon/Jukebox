@@ -5,6 +5,7 @@
 """
 
 import time
+from abc import ABC, abstractmethod
 
 class Track:
     """Track/song representation."""
@@ -79,18 +80,14 @@ class Playlist:
         self._list.extend(tracks)
         
         
-class Player:
+class Player(ABC):
     """Jukebox player class that can run playlists and play its musics."""
-    
-    def __init__(self):
-        pass
-    
     ##
-    # @brief play track.    
-    # @param track track. The track to play.   
-    def playTrack(self, track):
-        print("Playing: " + track.getName())
-        time.sleep(track.getLength()) # simulation of playing Track
+    # @brief play track. Abstract method   
+    # @param track track. The track to play.
+    @abstractmethod
+    def play(self, track):
+        pass
         
     # @brief run the playlist. Can be stopped with Ctrl-D action.
     # @param playlist playlist. The playlist to launch.
@@ -101,20 +98,29 @@ class Player:
         try:
             while loop or time.time() < timeout:
                 track = playlist.nextTrack()
-                self.playTrack(track)
+                self.play(track)
                 
         except KeyboardInterrupt:
             print('Stopped.')
+            
+class TrackPlayer(Player):
+    """Music player specialized in Track reading."""
+    ##
+    # @brief play track. Abstract method   
+    # @param track track. The track to play.
+    def play(self, track):
+        print("Playing: " + track.getName())
+        time.sleep(track.getLength()) # simulation of playing Track
             
 class Jukebox:
     """Jukebox class"""
     
     ##
     # @param library list of tracks. The collection of tracks associated to the jukebox.
-    def __init__(self, library):
+    def __init__(self, library, player):
         self._library = library # collection of tracks
         self._playlist = Playlist([])
-        self._player = Player()
+        self._player = player
     
     ##    
     # @brief add a track into the current playlist.
