@@ -64,7 +64,14 @@ class jukeboxTest(unittest.TestCase):
         j = Jukebox(self.tracks)
         p = j.getPlaylist()
         tl = p.getTrackList()
-        assertListEqual(p.getTrackList(), self.tracks)
+        self.assertListEqual(p.getTrackList(), [])
+        
+        j.select(self.tracks[2])
+        j.select(self.tracks[3])
+        p = j.getPlaylist()
+        tl = p.getTrackList()
+        self. assertListEqual(p.getTrackList(), [self.tracks[2], self.tracks[3]])
+        
         j.play()
         
     
